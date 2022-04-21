@@ -32,7 +32,7 @@ const InputNote = () => {
         }}
 
         />
-        <button className="btn btn-primary">Add</button>
+        <button className="btn btn-primary ml-2">Add</button>
       </form> 
     </Fragment>
   );
