@@ -1,32 +1,51 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import EditNote from './EditNote';
+import axios from 'axios';
 const ListNote = () => {
 //s
   const [note, setNote] = useState([]);
 
   //Delete note
-  const deleteNote = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3001/notes/${id}`, {
-        method:"DELETE"
-      });
-      setNote(note.filter(notes => notes.notes_id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
+  const deleteNote = (id) => {
+      axios.delete(`http://localhost:3001/notes/${id}`)
+      .then(res => {
+        setNote(note.filter(notes => notes.notes_id !== id));
+      })
+
   }
 
-  async function getNotes() {
-    const res = await fetch("http://localhost:3001/notes");
-
-    const notesArray = await res.json();
-    setNote(notesArray);
-  }
-  console.log(note);
+  //Getting all notes
   useEffect(() => {
-    getNotes();
+    axios.get('http://localhost:3001/notes')
+    .then(res => {
+      setNote(res.data);
+    })
   }, []);
 
+
+    // //Delete note
+    // const deleteNote = async (id) => {
+    //   try {
+    //     const response = await fetch(`http://localhost:3001/notes/${id}`, {
+    //       method:"DELETE"
+    //     });
+    //     setNote(note.filter(notes => notes.notes_id !== id));
+    //   } catch (err) {
+    //     console.error(err.message);
+    //   }
+    // }
+  
+    // async function getNotes() {
+    //   const res = await fetch("http://localhost:3001/notes");
+  
+    //   const notesArray = await res.json();
+    //   setNote(notesArray);
+    // }
+    // console.log(note);
+    // useEffect(() => {
+    //   getNotes();
+    // }, []);
+    
   return (
     <Fragment>
       <table className="table mt-5">

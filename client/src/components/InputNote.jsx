@@ -1,27 +1,37 @@
 import React, { Fragment, useState } from 'react';
-
+import axios from 'axios';
 const InputNote = () => {
   const [description, setDescription] = useState("");
 
-  const onSubmitForm = async (e) => {
-    e.preventDefault();
+  // const onSubmitForm = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      const body = { description }
-      const response = await fetch("http://localhost:3001/notes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-      window.location = "/";
-    } catch (err) {
-      console.error(err.message);
-    }
+  //   try {
+  //     const body = { description }
+  //     const response = await fetch("http://localhost:3001/notes", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(body)
+  //     });
+  //     window.location = "/";
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
+
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:3001/notes", {description})
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => console.log(err));
+    window.location = "/";
   }
 
   return (
     <Fragment>
-      <h1 className="text-center my-5">Notes</h1>
+      <h1 className="text-center my-5">Note List</h1>
       <form className="d-flex" onSubmit={onSubmitForm}>
         <input 
         type="text" 

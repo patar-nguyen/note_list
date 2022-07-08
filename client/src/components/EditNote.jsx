@@ -1,22 +1,33 @@
+import axios from 'axios';
 import React, { Fragment, useState } from 'react';
 
 const EditNote = ({ note }) => {
 
-  const editNote = async (id) => {
-    try {
-      const body = { description };
-      const response = await fetch(`http://localhost:3001/notes/${id}`, {
-        method:"PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-    });
-    window.location="/";
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
-
   const [description, setDescription] = useState(note.description)
+
+  // const editNote = async (id) => {
+  //   try {
+  //     const body = { description };
+  //     const response = await fetch(`http://localhost:3001/notes/${id}`, {
+  //       method:"PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(body)
+  //   });
+  //   window.location="/";
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
+
+  const editNote = (id) => {
+    axios.put(`http://localhost:3001/notes/${id}`, {description})
+    .then(res => {
+      console.log("updated");
+    })
+    .catch(err => console.log(err));
+    window.location = "/";
+  }
+   
   return (
   <Fragment>
     <button type="button" class="btn btn-warning" data-toggle="modal" data-target={`#id${note.notes_id}`}>
