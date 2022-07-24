@@ -4,7 +4,7 @@ import axios from 'axios';
 const ListNote = () => {
 //s
   const [note, setNote] = useState([]);
-
+console.log(note);
   //Delete note
   const deleteNote = (id) => {
       axios.delete(`http://localhost:3001/notes/${id}`)
